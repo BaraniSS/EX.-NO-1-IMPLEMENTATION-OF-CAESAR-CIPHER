@@ -1,4 +1,4 @@
-# EX. NO: 1(A) : IMPLEMENTATION OF CAESAR CIPHER
+EX. NO: 1(A) : IMPLEMENTATION OF CAESAR CIPHER
 
 ## AIM:
 To implement the simple substitution technique named Caesar cipher using C language.
@@ -16,8 +16,58 @@ STEP-4: Else subtract the key from the plain text.
 STEP-5: Display the cipher text obtained above.
 
 ## PROGRAM:
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+/* Shift every letter by 'key' (positive = encrypt, negative = decrypt) */
+void caesar(char text[], int key)
+{
+    int i;
+    key = ((key % 26) + 26) % 26;          /* normalise key to 0..25 */
+
+    for (i = 0; text[i] != '\0'; i++)
+    {
+        if (isupper(text[i]))
+            text[i] = (text[i] - 'A' + key) % 26 + 'A';
+        else if (islower(text[i]))
+            text[i] = (text[i] - 'a' + key) % 26 + 'a';
+        /* non-letters are left unchanged */
+    }
+}
+
+int main()
+{
+    char plain[200], text[200];
+    int key;
+
+    printf("Enter the plain text: ");
+    fgets(plain, sizeof(plain), stdin);
+    plain[strcspn(plain, "\n")] = '\0';     /* remove trailing newline */
+
+    printf("Enter the key value: ");
+    scanf("%d", &key);
+
+    /* Encryption */
+    strcpy(text, plain);
+    caesar(text, key);                      /* add key */
+    printf("\nPlain text      : %s\n", plain);
+    printf("Encrypted text  : %s\n", text);
+
+    /* Decryption */
+    caesar(text, -key);                     /* subtract key */
+    printf("Decrypted text  : %s\n", text);
+
+    return 0;
+}
+```
+
 
 ## OUTPUT:
+<img width="726" height="250" alt="Screenshot 2026-10-24 080551" src="https://github.com/user-attachments/assets/51d66876-112f-4dd9-8d37-991644b07761" />
+
 
 ## RESULT :
  Thus the implementation of ceasar cipher had been executed successfully.
+**
